@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Movie Booking System</title>
+ <script>
+  function showDescription() {
+   var x = document.getElementById("description");
+   if (x.style.display === "none") {
+    x.style.display = "block";
+   } else {
+    x.style.display = "none";
+   }
+  }
+ </script>
+</head>
+<body>
+ <h1>Welcome to                   </h1>
+ <button onclick="showDescription()">Movie Name</button>
+ <div id="description" style="display:none;">
+  <p>Movie description goes here.</p>
+ </div>
+</body>
+</html>

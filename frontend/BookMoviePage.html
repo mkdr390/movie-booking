@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Movie Booking</title>
+
+<style>
+body {
+  background-image:url("/images/bookimg.jpg");
+  background-size:100% 130%;
+  background-color: #f2f2f2;
+  font-family: 'Sriracha', cursive;
+}
+  div{
+  text-align: right;
+    }
+
+div.left{
+ text-align:left;
+color:white;
+ font-size:25px;
+ font-family: 'Sriracha', cursive;
+}
+
+h1 {
+color: #333;
+text-align: center;
+margin-top: 20px;
+}
+
+form {
+background-color: #fff;
+border-radius: 5px;
+padding: 20px;
+margin: 0 auto;
+max-width: 500px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+display: block;
+margin-top: 10px;
+color: #666;
+}
+
+input[type="text"], input[type="date"], input[type="number"], select {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+margin-top: 5px;
+margin-bottom: 10px;
+box-sizing: border-box;
+font-size: 16px;
+color: #333;
+}
+
+select {
+height: 40px;
+}
+
+  input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+input[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+input[type="submit"]:hover {
+background-color: #3e8e41;
+}
+.header1 .logo1 {
+  font-size: 0px;
+  color: hsla(0, 90%, 34%, 0.17);
+  text-decoration: none;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.header1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color:hwb(7 9% 13% / 0.54);
+  font-size: 40px;
+  font-family: Arial;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
+
+</style>
+</head>
+<body>
+<div class="left">
+<h3>Sky Movies</h3></div>
+<div>
+<a href="/">Home</a>
+ </div>
+<form id="book-form" method="post" >
+<center><h2>Book Movie</h2></center>
+<label for="viewer-name">Viewer Name:</label>
+<input type="text" id="viewer-name" name="viewerName" required>
+
+<label for="movie-name">Movie Name:</label>
+<input type="text" id="movie-name" name="movieName" required>
+<label for="date">Date:</label>
+<input type="date" id="date" name="date" required><br>
+
+<label for="time">Time:</label>
+<select id="time" name="time" required>
+  <option value=""></option>
+<option value="9am">9:00 AM</option>
+<option value="12pm">12:00 PM</option>
+<option value="3pm">3:00 PM</option>
+<option value="6pm">6:00 PM</option>
+<option value="9pm">9:00 PM</option>
+</select><br>
+
+
+<label for=""></label>
+
+
+<center> <button header class="header1" onclick="return onbook()" class="logo1" >
+  
+  Select seats
+</button> 
+</header>                               
+</form>
+<script>
+  function onbook() {
+    
+      const bookmovieForm = document.getElementById("book-form");
+      const isValid = bookmovieForm.checkValidity();
+
+      if (isValid) {
+
+        const formData = new FormData(bookmovieForm);
+
+        const formDataObj = {};
+
+        formData.forEach((value, key) => {
+          formDataObj[key] = value;
+        })
+
+        console.log(JSON.stringify(formDataObj))
+        
+        fetch('http://localhost:3000/api/user/bookmovie',{
+        
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formDataObj)
+        }).then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error('Something went wrong');
+        }).then((res) => {
+          if (res.status === 1) {
+            window.location = "/index.html"
+          } else {
+            alert("Error response")
+          }
+        }).catch(() => {
+          alert("Error creating the user");
+        });
+      } else {
+        console.log("no")
+      }
+
+
+      return false;
+    }
+    
+  </script>
+</body>
+</html>

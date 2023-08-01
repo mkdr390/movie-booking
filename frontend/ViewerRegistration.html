@@ -1,0 +1,84 @@
+<html>
+<head>
+
+<link rel="stylesheet" href="mystyle.css">
+<script src="/js/axios.js" ></script>
+</head>
+<body>
+<div class="left">
+<h3>Sky Movies</h3></div>
+<div>
+<a href="/">Home</a>
+ </div>
+<div class="login-box">
+    <h2>REGISTRATION FORM</h2>
+    
+      <form id="registration-form" method="post">
+      
+      
+      <div class="user-box" >
+        <input type="text" name="fullName"  required  >
+        <label >Full Name</label>
+       
+        
+      </div>
+     
+      <div class="user-box" >
+        <input type="text"   name="emailId" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="Invalid email address">
+        
+        <label >Email Id</label>
+          
+         
+      </div>
+      <div class="user-box" >
+        <input type="text"  name="phoneNumber" required pattern=".{10}" title="contain 10 numbers">
+          
+        <label >Phone Number</label>
+         
+      </div>
+     <div class="user-box" >
+      <input type="password"  name="password" required pattern=".{4,}" title="Eight or more characters">
+      <label>Password</label>
+        
+      </div>
+     
+      <button onclick="return onRegister()" >
+        
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        REGISTER
+      </button>
+     </form>
+  <script>
+    function onRegister() {
+      const registrationForm = document.getElementById("registration-form");
+      const isValid = registrationForm.checkValidity();
+
+      if (isValid) {
+
+        const formData = new FormData(registrationForm);
+
+        const formDataObj = {};
+
+        formData.forEach((value, key) => {
+          formDataObj[key] = value;
+
+        });
+        
+        axios.post('/api/user/create', formDataObj)
+        .then((res) => {
+            window.location = "/ViewerLogin.html";
+        }).catch((error) => {
+          const errorMessage = error?.response?.data?.message || 'Something went wrong!';
+          alert(errorMessage);
+        });
+      } else {
+        console.log("Validation fails")
+      }
+      return false;
+    }
+    </script>
+</body>
+</html>

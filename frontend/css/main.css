@@ -1,0 +1,92 @@
+body{
+background-image:url("paymentpic.jpg");
+background-size:100% 100%;
+}
+
+form {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+}
+
+label, input[type="submit"] {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+div{
+       text-align: right;
+    }
+
+div.left{
+ text-align:left;
+ font-size:25px;
+ font-family: 'Sriracha', cursive;
+}
+label {
+			display: block;
+			margin-top: 10px;
+			color: #666;
+		}
+
+		input[type="text"], input[type="date"], input[type="number"], select {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			margin-top: 5px;
+			margin-bottom: 10px;
+			box-sizing: border-box;
+			font-size: 16px;
+			color: #333;
+		}
+
+input[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+input[type="text"]::placeholder {
+  color: #aaa;
+}
+.header1 .logo1 {
+  font-size: 0px;
+  color: hsla(0, 90%, 34%, 0.17);
+  text-decoration: none;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.header1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color:hwb(7 9% 13% / 0.54);
+  font-size: 40px;
+  font-family: Arial;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
