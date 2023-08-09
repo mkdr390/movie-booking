@@ -1,0 +1,179 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css/common.css" />
+        <style>
+            
+        .movies-box{
+            width:300px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+            box-shadow: 2px 2px 30px rgba(0,0,0,0.2);
+            margin: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            border-top: 3px solid #292929;
+        }
+        .movies-img{
+            width:100%;
+            height: 400px;
+            position: relative;
+        }
+        .movies-img img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .movies-box .movie-name{
+            text-align:center;
+            display: block;
+            font-weight: 600;
+            display: -webkit-box;
+            max-width: 100%;
+            -webkit-line-clamp: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #3a3a3a;
+            margin: 20px;
+        }
+        .movies-box:hover{
+            transform: translateY(-10px);
+            transition: all ease 0.2s;
+        }
+
+        #movies-list{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        @media(max-width:440px){
+            .movies-box a,.movies-box{
+                width: 100%;
+            }
+        }
+            .movies-box{
+                flex-direction: column;
+            }
+
+
+        
+            @media(max-width:100px){
+            
+            .movies-box{
+                flex-direction: row;
+                width:90%;
+                border: 1px solid rgba(0,0,0,0.2);
+            }
+            .movies-box a{
+                width:65%;
+            }
+            
+        }
+        @media(max-width:1000%){
+            .movies-box a,.movies-box{
+                width: 1000%;
+            }
+            .movies-box{
+                flex-direction: column;
+            }
+            .logo img{
+                height: 30px;
+            }
+        }
+        .nav-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #f5f5f5;
+            margin-right: 20px;
+        }
+
+        .nav-items a {
+        text-decoration: none;
+        color: #000;
+        padding: 35px 20px;
+        }
+
+        .movies-heading h2{
+            font-weight: 400;
+            margin: 0px;
+            padding: 20px 20px;
+            background-color: rgba(0,0,0,0.01);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            font-size: 1.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            width: 100%;
+            text-align: center;
+        }
+
+        .movies-box .movie-book-btn {
+            cursor: pointer;
+            padding: 10px;
+            margin: 10px;
+        }
+        </style>
+    </head>
+    <body>
+        <header class="header">
+            <a href="/" class="logo">Sky Movies</a>
+            <nav class="nav-items">
+              <a href="/">Home</a>
+              <a href="About us.html">About</a>
+              <a href="TheaterLogin.html">Theater Login</a>
+              <div id="login-holder" ></div>
+            </nav>
+        </header>
+        <div class="movies-heading">
+            <h2>Movies</h2>
+        </div>
+        <div>
+            <div id="movies-list" >
+
+            </div>
+        </div>
+        <script src="js/axios.js" ></script>
+        <script src="js/app.js" ></script>
+        <script>
+            getAllFilms().then((result) => {
+                const movieListWrapper = document.getElementById('movies-list');
+                const moviesList = result.films || [];
+
+                moviesList.map(movie => {
+                    const movieBox = document.createElement('div');
+                    movieBox.classList.add('movies-box');
+
+                    const movieImageWrapper = document.createElement('div');
+                    movieImageWrapper.classList.add('movies-img');
+
+                    const movieImage = document.createElement('img');
+                    movieImage.src = movie.image;
+                    movieImageWrapper.appendChild(movieImage);
+
+                    const movieName = document.createElement('div');
+                    movieName.classList.add('movie-name');
+                    movieName.innerHTML = movie.name;
+
+                    const bookButton = document.createElement('button');
+                    bookButton.classList.add('movie-book-btn');
+                    bookButton.onclick = function book() {
+                        window.location = 'BookMovie.html';
+                    }
+                    bookButton.innerHTML = "Book now";
+
+                    movieBox.appendChild(movieImageWrapper);
+                    movieBox.appendChild(movieName);
+                    movieBox.appendChild(bookButton);
+                    movieListWrapper.appendChild(movieBox);
+                })
+
+            }).catch(() => {
+
+            })
+        </script>
+
+    </body>
+</html>

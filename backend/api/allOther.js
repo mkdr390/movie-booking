@@ -1,6 +1,6 @@
-const managemodel = require("../model/moviemodel");
+const managemodel = require("../model/managemodel");
 const adminmodel = require("../model/adminmodel");
-const moviemodel = require("../model/bookmoviemodel");
+const bookmoviemodel = require("../model/bookmoviemodel");
 const paymentmodel = require("../model/paymentmodel");
 const ticketmodel = require("../model/ticketmodel");
 
@@ -76,19 +76,19 @@ app.get('/viewmovie', (req, res) => {console.log(req.body)
         const credential = req.body;
 
        
-                adminmodel.create({
-                    userName: credential.userName,
-                    password: credential.password
-                }).then(() => {
-                    res.send({ message: "User created succesfully", status: 1 })
-                }).catch(() => {
-                    res.send({ message: "Error createing the user.", status: 0 })
-                })
-            });
+        adminmodel.create({
+            userName: credential.userName,
+            password: credential.password
+        }).then(() => {
+            res.send({ message: "User created succesfully", status: 1 })
+        }).catch(() => {
+            res.send({ message: "Error createing the user.", status: 0 })
+        })
+    });
 
             // GET APi to get all the users
             app.get('/user/movie', (req, res) => {
-                moviemodel.find().then((userRes) => {
+                bookmoviemodel.find().then((userRes) => {
                     res.send({ users: userRes });
                 }).catch((error) => {
                     res.status(400).send({ message: "Some error occured", error });
@@ -96,19 +96,16 @@ app.get('/viewmovie', (req, res) => {console.log(req.body)
             })
             app.post('/user/bookmovie',  (req, res) => {
                 const credentials = req.body;
-        
-        
-        
-                        moviemodel.create({
-                            viewerName: credentials.viewerName,
-                            movieName: credentials.movieName,
-                            date: credentials.date,
-                            time: credentials.time
-                        }).then(() => {
-                            res.send({ message: "booking succesfully", status: 1 })
-                        }).catch(() => {
-                            res.send({ message: "Error createing the user.", status: 0 })
-                        })
+                bookmoviemodel.create({
+                    viewerName: credentials.viewerName,
+                    movieName: credentials.movieName,
+                    date: credentials.date,
+                    time: credentials.time
+                }).then(() => {
+                    res.send({ message: "booking succesfully", status: 1 })
+                }).catch(() => {
+                    res.send({ message: "Error createing the user.", status: 0 })
+                })
                    
         });
 

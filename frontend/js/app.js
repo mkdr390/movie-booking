@@ -37,24 +37,28 @@ function onLogoutClick() {
 function renderLoginHolder(user) {
     const loginHolder = document.getElementById("login-holder");
 
-    if (user) {
-        const profileHolder = document.createElement('div');
-        profileHolder.innerHTML = "Hi, " + user.fullName;
+    if (loginHolder) {
 
-        const logoutButton = document.createElement('button');
-        logoutButton.innerHTML = 'Logout'
-        logoutButton.onclick = onLogoutClick;
-
-        loginHolder.appendChild(profileHolder);
-        loginHolder.appendChild(logoutButton);
-    } else {
-        const loginAnchor = document.createElement("a");
-        loginAnchor.href = 'ViewerLogin.html';
-        loginAnchor.innerHTML = 'Login';
-        loginAnchor.classList.add('login-link');
-
-        loginHolder.appendChild(loginAnchor);
+        if (user) {
+            const profileHolder = document.createElement('div');
+            profileHolder.innerHTML = "Hi, " + user.fullName;
+    
+            const logoutButton = document.createElement('button');
+            logoutButton.innerHTML = 'Logout'
+            logoutButton.onclick = onLogoutClick;
+    
+            loginHolder.appendChild(profileHolder);
+            loginHolder.appendChild(logoutButton);
+        } else {
+            const loginAnchor = document.createElement("a");
+            loginAnchor.href = 'ViewerLogin.html';
+            loginAnchor.innerHTML = 'Login';
+            loginAnchor.classList.add('login-link');
+    
+            loginHolder.appendChild(loginAnchor);
+        }
     }
+
 }
 
 
@@ -79,3 +83,13 @@ function verifyLoginToken() {
 
 
 verifyLoginToken();
+
+function createAFilm(filmDetails) {
+    return apiMachine.post('/film/create', {
+        data: filmDetails
+    })
+}
+
+function getAllFilms() {
+    return apiMachine.get('/film/all', {});
+}
