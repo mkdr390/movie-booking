@@ -60,7 +60,7 @@ module.exports = function (app) {
             const userDetails = await checkUser(credentials.emailId, credentials.password);
 
             if (userDetails && userDetails.emailId) {
-                const requiredDetails = { emailId: userDetails.emailId, password: userDetails.password, fullName: userDetails.fullName };
+                const requiredDetails = { id: userDetails._id, emailId: userDetails.emailId, password: userDetails.password, fullName: userDetails.fullName };
 
                 const token = JWT.sign(requiredDetails, process.env.JWT_SECRET, { "algorithm": "HS256", expiresIn: '3d' })
 

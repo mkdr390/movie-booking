@@ -1,4 +1,4 @@
-const tickets = require('mongoose');
-const ticket = require("../schema/tickets");
+const mongoose = require('mongoose');
+const ticket = require("../schema/ticket");
 
-module.exports = tickets.model('ticket', ticket);
+module.exports = mongoose.model('ticket', ticket);

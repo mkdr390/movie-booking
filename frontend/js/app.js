@@ -93,3 +93,62 @@ function createAFilm(filmDetails) {
 function getAllFilms() {
     return apiMachine.get('/film/all', {});
 }
+
+function getTheaterToken() {
+    return localStorage.getItem('theater-token') || '';
+}
+
+function getATheater() {
+    return apiMachine.get('/theater/verify', {
+        token: getTheaterToken()
+    })
+}
+
+function addAMovieToTheater(movieId) {
+    return apiMachine.put('/theater/update', {
+        data: {
+            filmId: movieId,
+        },
+        token: getTheaterToken()
+    })
+}
+
+function getTheatersWithFilm(filmId) {
+    return apiMachine.get('/theater/some', {
+        params: {
+            id: filmId
+        }
+    })
+}
+
+function bookAMovieNow(details) {
+    const userToken = localStorage.getItem('user-token') || '';
+
+    return apiMachine.post('/ticket/book', {
+        data: details,
+        token: userToken
+    })
+}
+
+
+function updatePayment(ticketId) {
+    return apiMachine.put('/ticket/update', {
+        data: {
+            ticketId
+        }
+    })
+}
+
+function getTicketDetails(ticketId) {
+    return apiMachine.get('/ticket/details', {
+        params: {
+            id: ticketId
+        }
+    })
+}
+
+function getQueryParams(key) {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    return urlParams.get(key);
+}

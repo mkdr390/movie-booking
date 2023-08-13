@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Payment View Page</title>
+    <link rel="stylesheet" href="css/common.css" />
     <style>
 body{
 background-image:url("paymentpic.jpg");
@@ -50,23 +51,64 @@ div.left{
     </style>
   </head>
  <body>
-<div class="left">
-<h3>Sky Movies</h3></div>
-<div class ="right">
-<a href="ViewerLogin.html">Logout</a><br>
-<a href="/">Home</a>
-</div>
+  <header class="header">
+    <a href="/" class="logo">Sky Movies</a>
+    <nav class="nav-items">
+      <a href="About us.html">About</a>
+      <a href="TheaterLogin.html">Theater Login</a>
+
+      <div id="login-holder" ></div>
+
+    </nav>
+  </header>
 <h1>Booking Successful</h1>
 
     <div class="container">
       <div class="details">
-        <p><label>Viewer Name:</label> </p>
-        <p><label>Movie Name:</label> </p>
-        <p><label>Date:</label></p>
-        <p><label>Time:</label></p>
-        <p><label>Number of Seats:</label> </p>
-        <p><label>Amount:</label></p>
+        <p><label>Ticket Number:</label><p id="movie-ticket" ></p></p>
+        <p>
+          <label>Movie Name:</label>
+          <p id="movie-name" ></p>
+        </p>
+        <p>
+          <label>Theater Name:</label>
+          <p id="theater-name" ></p>
+        </p>
+        <p><label>Date:</label><p id="movie-date" ></p></p>
+        <p><label>Time:</label><p id="movie-time" ></p></p>
+        <p><label>Seats:</label> <p id="movie-seats" ></p></p>
+        <p><label>Amount:</label><p id="movie-amount" ></p></p>
       </div>
     </div>
+    <script src="js/axios.js" ></script>
+<script src="js/app.js" ></script>
+<script>
+  const ticketId = getQueryParams('ticketId');
+
+  if (!ticketId) {
+    window.location = '/BookMovie.html'
+  } else {
+    getTicketDetails(ticketId).then((result) => {
+
+      const ticket = document.getElementById('movie-ticket');
+      const movieName = document.getElementById('movie-name');
+      const theaterName = document.getElementById('theater-name');
+      const movieDate = document.getElementById('movie-date');
+      const movieTime = document.getElementById('movie-time');
+      const movieSeats = document.getElementById('movie-seats');
+      const movieAmount = document.getElementById('movie-amount');
+
+      ticket.innerHTML = ticketId;
+      movieName.innerHTML = result.ticket.film.name;
+      theaterName.innerHTML = result.ticket.theater.name;
+      movieDate.innerHTML = result.ticket.date;
+      movieTime.innerHTML = result.ticket.time;
+      movieAmount.innerHTML = result.ticket.amount;
+      movieSeats.innerHTML = result.ticket.seats.toString();
+
+    })
+  }
+    
+  </script>
   </body>
 </html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Add Category</title>
+  </head>
+  <body>
+<style>
+body{
+background-image:url("https://t4.ftcdn.net/jpg/01/26/39/95/360_F_126399549_kZ8tglJXdeKIX6U4UkTMHvvyovaT8uui.jpg");
+background-size:100% 250%;
+}
+form {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  margin: auto;
+}
+div{
+       text-align: right;
+    }
+
+div.left{
+ text-align:left;
+color:white;
+ font-size:25px;
+ font-family: 'Sriracha', cursive;
+}
+</style>
+  <div class="left">
+    <a href="/">
+      <h3>Sky Movies</h3></div>
+    </a>
+  <div>
+ 
+  </div>
+
+  <div style="display: flex;">
+    <div>
+      <div>Current Movie</div>
+      <select id="movies-dropdown" name="movieName" onchange="onMovieChange()" >
+        <option value="" >Select a movie</option>
+      
+      </select>
+    </div>
+  </div>
+
+    <script src="js/axios.js" ></script>
+    <script src="js/app.js" ></script>
+    <script>
+
+  const moviesDropdown = document.getElementById("movies-dropdown");
+
+  getAllFilms().then((result) => {
+    if (result.films) {
+      result.films.map(film => {
+        const newOption = document.createElement('option');
+        newOption.value = film._id;
+        newOption.innerHTML = film.name;
+
+        moviesDropdown.appendChild(newOption);
+      })
+    }
+  }).catch(() => {
+
+  })
+
+  function onMovieChange() {
+    if (moviesDropdown.value) {
+      addAMovieToTheater(moviesDropdown.value).then(() => {
+        alert("Changed movie in the screen succesfully!")
+      }).catch(() => {
+        alert("Error changing the movie");
+      });
+    }
+  }
+
+  
+    getATheater().then((theater) => {
+      moviesDropdown.value = theater.film;
+    }).catch(() => {
+      window.location = 'TheaterLogin.html';
+    });
+    </script>
+  </body>
+</html>

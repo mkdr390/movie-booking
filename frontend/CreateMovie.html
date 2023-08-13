@@ -39,9 +39,9 @@
                         <option value="Kannada" >Kannada</option>
                     </select>
                 </div>
-                <div class="user-box" >
-                    <input name="releaseDate" required />
-                    <label>Release Date</label>
+                <div style="display: flex; flex-direction: column; margin-bottom: 30px;" >
+                    <label style="text-align: left; margin-bottom: 10px;" >Release Date</label>
+                    <input name="releaseDate" style="background: transparent; color: white; border: none; outline: none; border-bottom: 1px solid white;" type="date" required />
                 </div>
                 <button onclick="return onFilmCreate()">create film</button>
             </form>

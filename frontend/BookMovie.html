@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>Movie Booking</title>
-
+<link rel="stylesheet" href="css/common.css" />
 <style>
 body {
   background-image:url("/images/bookimg.jpg");
@@ -97,30 +97,51 @@ background-color: #3e8e41;
 </style>
 </head>
 <body>
-<div class="left">
-<h3>Sky Movies</h3></div>
-<div>
-<a href="/">Home</a>
- </div>
+  <header class="header">
+    <a href="/" class="logo">Sky Movies</a>
+    <nav class="nav-items">
+      <a href="About us.html">About</a>
+      <a href="TheaterLogin.html">Theater Login</a>
+
+      <div id="login-holder" ></div>
+
+    </nav>
+  </header>
 <form id="book-form" method="post" >
 <center><h2>Book Movie</h2></center>
-<label for="viewer-name">Viewer Name:</label>
-<input type="text" id="viewer-name" name="viewerName" required>
 
-<label for="movie-name">Movie Name:</label>
-<input type="text" id="movie-name" name="movieName" required>
-<label for="date">Date:</label>
+<label for="movies-dropdown">Movie</label>
+
+<select id="movies-dropdown" name="film" onchange="onMovieChanged()" >
+  <option value="" >Select a movie</option>
+
+</select>
+
+<label for="theaters-dropdown">Theater</label>
+<select id="theaters-dropdown" name="theater" disabled>
+  <option value="" >Select a theater</option>
+
+</select>
+
+<label for="date">Date</label>
 <input type="date" id="date" name="date" required><br>
 
-<label for="time">Time:</label>
+<label for="time">Time</label>
 <select id="time" name="time" required>
-  <option value=""></option>
-<option value="9am">9:00 AM</option>
-<option value="12pm">12:00 PM</option>
-<option value="3pm">3:00 PM</option>
-<option value="6pm">6:00 PM</option>
-<option value="9pm">9:00 PM</option>
+  <option value="">Select a time</option>
+<option value="12PM">12:00 PM</option>
+<option value="6PM">6:00 PM</option>
+<option value="11PM">11:00 PM</option>
 </select><br>
+
+<label for="seats">How many seats?</label>
+<select id="seats" name="seats" >
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+</select>
 
 
 <label for=""></label>
@@ -128,10 +149,57 @@ background-color: #3e8e41;
 
 <center> <button header class="header1" onclick="return onbook()" class="logo1" >
   
-  Select seats
+  Book Tickets
 </button> 
 </header>                               
 </form>
+
+<script src="js/axios.js" ></script>
+<script src="js/app.js" ></script>
+<script>
+  const moviesDropdown = document.getElementById("movies-dropdown");
+
+  getAllFilms().then((result) => {
+    if (result.films) {
+      result.films.map(film => {
+        const newOption = document.createElement('option');
+        newOption.value = film._id;
+        newOption.innerHTML = film.name;
+
+        moviesDropdown.appendChild(newOption);
+      })
+    }
+  }).catch(() => {
+
+  })
+
+  
+
+  function onMovieChanged() {
+    if (moviesDropdown.value) {
+      getTheatersWithFilm(moviesDropdown.value).then((result) => {
+        const theatersDropdown = document.getElementById("theaters-dropdown");
+        if (result.theaters && result.theaters.length) {
+          theatersDropdown.disabled = false
+          theatersDropdown.options.length = 1;
+          result.theaters.map(film => {
+            const newOption = document.createElement('option');
+            newOption.value = film._id;
+            newOption.innerHTML = film.name;
+
+            theatersDropdown.appendChild(newOption);
+          })
+      } else {
+        theatersDropdown.disabled = true
+        theatersDropdown.value = ''
+      }
+
+      }).catch(() => {
+
+      })
+    }
+  }
+</script>
 <script>
   function onbook() {
     
@@ -148,30 +216,14 @@ background-color: #3e8e41;
           formDataObj[key] = value;
         })
 
-        console.log(JSON.stringify(formDataObj))
-        
-        fetch('http://localhost:3000/api/user/bookmovie',{
-        
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(formDataObj)
-        }).then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error('Something went wrong');
-        }).then((res) => {
-          if (res.status === 1) {
-            window.location = "/index.html"
-          } else {
-            alert("Error response")
-          }
+        bookAMovieNow(formDataObj).then((res) => {
+          const ticketId = res.ticket && res.ticket._id;
+          window.location = '/payment.html?ticketId=' + ticketId
         }).catch(() => {
-          alert("Error creating the user");
+          alert("Error booking the movie");
         });
       } else {
+        bookmovieForm.reportValidity()
         console.log("no")
       }
 

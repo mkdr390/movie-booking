@@ -5,9 +5,12 @@
 </head>
 <body>
 <div class="left">
-<h3>Sky Movies</h3></div>
+  <a href="/">
+    <h3>Sky Movies</h3>
+  </a>
+</div>
 <div>
-<a href="/">Home</a>
+
  </div>
 <div class="login-box">
     <h2>Login</h2>
@@ -65,7 +68,7 @@
         }).then((res) => {
           if (res.token) {
             localStorage.setItem("user-token", res.token)
-            window.location = "/addmovies.html"
+            window.location = "/movies.html"
           } else {
             alert("Error response")
           }

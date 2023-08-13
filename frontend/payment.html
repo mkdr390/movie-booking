@@ -24,50 +24,19 @@
 </button> 
 </header>    
 </form>
+<script src="js/axios.js" ></script>
+<script src="js/app.js" ></script>
 <script>
+  const ticketId = getQueryParams('ticketId');
+
+if (!ticketId) {
+  window.location = '/BookMovie.html'
+}
+
   function payment() {
-    
-      const paymentForm = document.getElementById("payment-form");
-      const isValid = paymentForm.checkValidity();
-
-      if (isValid) {
-
-        const formData = new FormData(paymentForm);
-
-        const formDataObj = {};
-
-        formData.forEach((value, key) => {
-          formDataObj[key] = value;
-        })
-
-        console.log(JSON.stringify(formDataObj))
-        
-        fetch('http://localhost:3000/payment',{
-        
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(formDataObj)
-        }).then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error('Something went wrong');
-        }).then((res) => {
-          if (res.status === 1) {
-            window.location = "/PaymentViewPage.html"
-          } else {
-            alert("Error response")
-          }
-        }).catch(() => {
-          alert("Error creating the user");
-        });
-      } else {
-        console.log("no")
-      }
-
-
+      updatePayment(ticketId).then(() => {
+        window.location = '/PaymentViewPage.html?ticketId=' + ticketId
+      });
       return false;
     }
     
