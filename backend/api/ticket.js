@@ -8,11 +8,13 @@ async function createSeats(theater, seats, date, time) {
 
 
         const theSeats = theTheater.seats;
+
         const targetedIndex = theSeats.findIndex(seat => seat.date === date);
         const targetedSeats = targetedIndex != -1 ? theSeats[targetedIndex] : {};
         const seatsAvailable = targetedSeats[time] || 100;
         const remainingSeats = seatsAvailable - seats;
         targetedSeats[time] = remainingSeats;
+        targetedSeats.date = date;
         let seatNames = [];
         for (i = seatsAvailable; i > remainingSeats; i--) {
             seatNames.push('T' + i.toString());
@@ -23,6 +25,7 @@ async function createSeats(theater, seats, date, time) {
             targetedSeats,
             ...(theSeats.splice(targetedIndex, theSeats.length)),
         ] : [...theSeats, targetedSeats]
+
 
 
         return {
@@ -67,8 +70,8 @@ module.exports = function (app) {
                             amount: bookingData.seats * 150,
                             seats: seats.seatNames,
                             user: userDetails.id
-                        }).then((result) => {
-                            theaterModel.findByIdAndUpdate(bookingData.theater, { seats: seats.finalSeats });
+                        }).then(async (result) => {
+                            await theaterModel.findByIdAndUpdate(bookingData.theater, { seats: seats.seats });
                             res.send({ message: "Ordered ticket successfully!", ticket: result })
                         }).catch((err) => {
                             res.status(400).send({ message: 'Error booking!', error: err })

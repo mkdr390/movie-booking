@@ -29,22 +29,16 @@ module.exports = new mongoose.Schema({
         required: false
       },
       '12PM': {
-        totalSeats: {
           type: Number,
           required: false
-        }
       },
       '6PM': {
-        totalSeats: {
           type: Number,
           required: false
-        }
       },
       '11PM': {
-        totalSeats: {
           type: Number,
           required: false
-        }
       }
     }]
 });
