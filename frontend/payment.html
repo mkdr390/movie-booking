@@ -1,24 +1,31 @@
 <html>
 <head>
 <body>
-<link rel="stylesheet" href="/styles/main.css">
-<div class="left">
-<h3>Sky Movies</h3></div>
-<div>
-<a href="/">Home</a>
+<link rel="stylesheet" href="/css/main.css">
+<header class="header">
+  <a href="/" class="logo">Sky Movies</a>
+  <nav class="nav-items">
+    <a href="/">Home</a>
+    <a href="About us.html">About</a>
+    <a href="TheaterLogin.html">Theater Login</a>
+
+    <div id="login-holder" ></div>
+
+  </nav>
+</header>
  </div>
 <form id="payment-form" method="post">
   <h2>Payment</h2>
   <label for="viewername">Viewer Name:</label>
-  <input type="text" id="viewername" name="viewerName"><br><br>
+  <div id="viewer-name" name="viewerName" style="text-align: left;"></div><br><br>
  <label for="date">Date:</label>
-<input type="date" id="date" name="date"><br>
+<div id="todays-date" style="text-align: left;" ></div>
   <label for="cardnumber">Card Number:</label>
-  <input type="text" id="cardnumber" name="cardNumber"><br><br>
+  <input type="text" id="cardnumber" minlength="16" maxlength="16" name="cardNumber"  required><br><br>
   <label for="expirydate">Expiry Date:</label>
-  <input type="text" id="expirydate" name="expiryDate"><br><br>
+  <input type="text" id="expirydate" name="expiryDate" placeholder="MM/YY" required><br><br>
   <label for="cvv">CVV:</label>
-  <input type="text" id="cvv" name="cvv"><br><br>
+  <input type="text" id="cvv" maxlength="3" name="cvv" required><br><br>
   <center><button header class="header1" onclick="return payment()" class="logo1" >
     Pay now
 </button> 
@@ -27,6 +34,16 @@
 <script src="js/axios.js" ></script>
 <script src="js/app.js" ></script>
 <script>
+
+const todaysDate = document.getElementById("todays-date");
+if (todaysDate) {
+  var currentTime = new Date()
+var month = currentTime.getMonth() + 1
+var day = currentTime.getDate()
+var year = currentTime.getFullYear()
+todaysDate.innerHTML = day + "/" + month + "/" + year;
+}
+
   const ticketId = getQueryParams('ticketId');
 
 if (!ticketId) {
@@ -34,9 +51,16 @@ if (!ticketId) {
 }
 
   function payment() {
-      updatePayment(ticketId).then(() => {
-        window.location = '/PaymentViewPage.html?ticketId=' + ticketId
-      });
+      const paymentForm = document.getElementById("payment-form");
+      paymentForm.reportValidity();
+      const isValid = paymentForm.checkValidity();
+
+      if (isValid) {
+        updatePayment(ticketId).then(() => {
+          window.location = '/PaymentViewPage.html?ticketId=' + ticketId
+        });
+      }
+
       return false;
     }
     

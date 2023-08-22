@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <html>
 <head>
 
-<link rel="stylesheet" href="mystyle.css">
+<link rel="stylesheet" href="/css/registration.css">
 <script src="/js/axios.js" ></script>
 </head>
 <body>
@@ -17,7 +18,7 @@
       
       
       <div class="user-box" >
-        <input type="text" name="fullName"  required  >
+        <input type="text" id="user-name" name="fullName" oninput="onNameChange()" title="Enter a valid name" required  >
         <label >Full Name</label>
        
         
@@ -31,13 +32,13 @@
          
       </div>
       <div class="user-box" >
-        <input type="text"  name="phoneNumber" required pattern=".{10}" title="contain 10 numbers">
+        <input type="text"  name="phoneNumber" required pattern=".{10}" maxlength="10" title="Please a valid 10 digit mobile number">
           
         <label >Phone Number</label>
          
       </div>
      <div class="user-box" >
-      <input type="password"  name="password" required pattern=".{4,}" title="Eight or more characters">
+      <input id="password-field" type="password"  name="password" minlength="8" oninput="onPasswordChange()" required>
       <label>Password</label>
         
       </div>
@@ -52,8 +53,30 @@
       </button>
      </form>
   <script>
+
+    function onNameChange() {
+      const nameField = document.getElementById("user-name");
+      const nameRegex = /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/;
+
+      const nameValue = nameField.value;
+
+      if(!nameRegex.test(nameValue)) {
+        nameField.value = nameValue.slice(0, -1);
+      }
+    }
+
+    function onPasswordChange() {
+      // const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+      const passwordField = document.getElementById("password-field");
+
+      // if (!passwordRegex.test(passwordField.value)) {
+      //   passwordField.setCustomValidity("Password must have at least one uppercase letter, one lowercase letter and one number")
+      // }
+    }
+
     function onRegister() {
       const registrationForm = document.getElementById("registration-form");
+      registrationForm.reportValidity()
       const isValid = registrationForm.checkValidity();
 
       if (isValid) {

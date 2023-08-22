@@ -39,37 +39,48 @@ color:white;
 <a href="TheaterHomePage.html">Home</a></h2>
 <body>
  <center><h1>Delete Movie</h1>
-<table>
+<table id="movies-table" >
 <tr>
 <th>Movie Id</th>
  <th> Movie Name</th>
- <th>Category</th>
-  <th>Date</th>
-  <th>Time</th>
+  <th>Delete</th>
 </tr>
-<tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-   <td></td>
-   </tr>
-<tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-   </tr>
-<tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-   </tr>
 </center>
  </table>
-<button type="float:left;">Delete</button>
+<script src="js/axios.js" ></script>
+        <script src="js/app.js" ></script>
+        <script>
+          const moviesTable = document.getElementById("movies-table");
+
+            getAllFilms().then((result) => {
+              result.films.map((film) => {
+                const tableRow = document.createElement('tr');
+                const movieTD = document.createElement('td');
+                const movieNameTD = document.createElement('td');
+                const movieDelete = document.createElement('td');
+
+                const onMovieRemove = () => {
+                  apiMachine.delete('/film/delete?film=' + film._id, {}).then(() => {
+                    window.location.reload()
+                  }).catch(() => {
+                    alert("Error removing the movie");
+                  })
+                }
+
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = "Delete";
+                deleteButton.onclick = onMovieRemove;
+
+                movieDelete.appendChild(deleteButton);
+                movieTD.innerHTML = film._id;
+                movieNameTD.innerHTML = film.name;
+                tableRow.appendChild(movieTD);
+                tableRow.appendChild(movieNameTD);
+                tableRow.appendChild(movieDelete);
+
+                moviesTable.appendChild(tableRow);
+              })
+            })
+        </script>
 </body>
 </html>

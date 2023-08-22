@@ -1,5 +1,7 @@
+@import url('common.css');
+
 body{
-background-image:url("paymentpic.jpg");
+background-image:url("/paymentpic.jpg");
 background-size:100% 100%;
 }
 

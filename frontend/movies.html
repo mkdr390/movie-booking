@@ -160,7 +160,7 @@
                     const bookButton = document.createElement('button');
                     bookButton.classList.add('movie-book-btn');
                     bookButton.onclick = function book() {
-                        window.location = 'BookMovie.html';
+                        window.location = 'BookMovie.html?film=' + movie._id;
                     }
                     bookButton.innerHTML = "Book now";
 

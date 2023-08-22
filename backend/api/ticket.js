@@ -111,4 +111,37 @@ module.exports = function (app) {
             res.send({ ticket: null })
         })
     })
+
+    app.get('/ticket/theater', async (req, res) => {
+        const theaterId = req.query.theater;
+        const dateValue = req.query.date;
+
+        if (theaterId) {
+            let filter = { theater: theaterId };
+            if (dateValue) {
+                filter.date = dateValue;
+            }
+            ticketModel.find(filter).populate('film').then((tickets) => {
+                res.send({ tickets: tickets });
+            }).catch(() => {
+                res.status(400).send({ message: 'Error getting tickets' })
+            })
+        } else {
+            res.status(400).send({ message: 'Theater Id missing!' })
+        }
+    })
+
+    app.get('/ticket/user', async (req, res) => {
+        const userId = req.query.user;
+
+        if (userId) {
+            ticketModel.find({ user: userId  }).then((tickets) => {
+                res.send({ tickets: tickets });
+            }).catch(() => {
+                res.status(400).send({ message: 'Error getting tickets' })
+            })
+        } else {
+            res.status(400).send({ message: 'User Id missing!' })
+        }
+    })
 }

@@ -73,7 +73,15 @@ function verifyLoginToken() {
         })
         .then((res) => {
             renderLoginHolder(res);
-        }).catch(() => {})
+
+            const viewerName = document.getElementById("viewer-name");
+
+            if (viewerName) {
+                viewerName.innerHTML = res.fullName;
+            }
+        }).catch(() => {
+            renderLoginHolder();
+        })
     } else {
         renderLoginHolder();
 
@@ -100,6 +108,12 @@ function getTheaterToken() {
 
 function getATheater() {
     return apiMachine.get('/theater/verify', {
+        token: getTheaterToken()
+    })
+}
+
+function getTheaterDetails() {
+    return apiMachine.get('/theater/details', {
         token: getTheaterToken()
     })
 }

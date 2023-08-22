@@ -49,76 +49,57 @@ font-size:16px;
   <center>
  <h1>View Available Tickets</h1>
  
- <h2>Date: <input type="date" ></h2>
+ <h2>Date: <input id="date-change" type="date" ></h2>
  </div>
 
 <table id="myTable"><br></table>
 
 </div>
  
+<script src="js/axios.js" ></script>
+<script src="js/app.js" ></script>
 <script>
 
+getATheater().then(() => {}).catch(() => {
+    localStorage.removeItem('theater-token');
+    window.location = 'TheaterLogin.html';
+  })
 
-    
-
+function renderTable(dateValue) {
+  getTheaterDetails().then((result) => {
   
-  var arrObj =
-  [
-    {
-      "_id": "64bbe30cfa0e547bfdff9b6d",
-      "movieId": "1",
-      "movieName": "Leo",
-      "numberOfSeats": "40",
-      "__v": 0
-    },
-    {
-      "_id": "64bbe350fa0e547bfdff9b6f",
-      "movieId": "2",
-      "movieName": "Madhura Manohara Moham",
-      "numberOfSeats": "30",
-      "__v": 0
-    },
-    {
-      "_id": "64bbe387fa0e547bfdff9b71",
-      "movieId": "3",
-      "movieName": "valatty",
-      "numberOfSeats": "35",
-      "__v": 0
-    },
-    {
-      "_id": "64bbe3abfa0e547bfdff9b73",
-      "movieId": "4",
-      "movieName": "Maaveeran",
-      "numberOfSeats": "50",
-      "__v": 0
-    }
-  ]
+    const movieName = result.film.name;
+    const seatsForSix = result.seats.find(s => s["6PM"] && s.date === dateValue);
+    const seatsAvailable = seatsForSix && seatsForSix["6PM"] || 100;
   
+    var myvar =
+  '<tr>'+
+  '<th>Movie Id</th>'+
+  '<th>Movie Name</th>'+
+  '<th>Available Seats</th>'+
+  '</tr>';
   
-  var objLength = arrObj.length;
-var myvar = '<table>'+
-'<tr>'+
-'<th>Movie Id</th>'+
-'<th>Movie Name</th>'+
-'<th>Number of Seats</th>'+
-'</tr>';
-
- for(var i = 0; i < objLength; i++){
-myvar += '<tr>'+
-'<td>'+arrObj[i].movieId+'</td>'+
-'<td>'+arrObj[i].movieName+'</tD>'+
- ' <td>'+arrObj[i].numberOfSeats+'</th>'+
-'</tr>'     
+  myvar += '<tr>'+
+  '<td>'+'1'+'</td>'+
+  '<td>'+movieName+'</tD>'+
+   ' <td>'+seatsAvailable+'</th>'+
+  '</tr>';
+  
+   document.getElementById('myTable').innerHTML = myvar;
+  
+  })
 }
 
- myvar += '</table>';
+const dateChanger = document.getElementById("date-change");
 
-console.log(myvar);
- document.getElementById('myTable').innerHTML = myvar;
- 
+const date = new Date();
+const isoDate = date.toISOString().split('T')[0];
+dateChanger.value = isoDate;
+dateChanger.onchange = () => {
+  renderTable(dateChanger.value)
+}
 
- 
- 
+renderTable(isoDate)
   
  </script>
 </body>

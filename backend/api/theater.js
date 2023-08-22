@@ -114,6 +114,31 @@ module.exports = function (app) {
         }
     });
 
+    app.get('/theater/details', async (req, res) => {
+        const bearerToken = req.headers['authorization'] || '';
+
+        // Remove Bearer from string
+        token = bearerToken.replace(/^Bearer\s+/, "");
+
+        if (token) {
+            let theaterDetails = null;
+
+            try {
+                theaterDetails = JWT.verify(token, process.env.JWT_SECRET);
+
+                if (theaterDetails) {
+                    const { _doc: actualObj } = await theaterModel.findOne({ emailId: theaterDetails.emailId }).populate("film").exec();
+
+                    res.send(actualObj);
+                }
+            } catch(err) {
+                res.status(400).send(err)
+            }
+        } else {
+            res.status(400).send({ message: 'Token not available' })
+        }
+    });
+
     app.put('/theater/update', async (req, res) => {
         const data = req.body;
         const bearerToken = req.headers['authorization'] || '';

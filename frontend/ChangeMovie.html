@@ -52,19 +52,7 @@ color:white;
 
   const moviesDropdown = document.getElementById("movies-dropdown");
 
-  getAllFilms().then((result) => {
-    if (result.films) {
-      result.films.map(film => {
-        const newOption = document.createElement('option');
-        newOption.value = film._id;
-        newOption.innerHTML = film.name;
-
-        moviesDropdown.appendChild(newOption);
-      })
-    }
-  }).catch(() => {
-
-  })
+  
 
   function onMovieChange() {
     if (moviesDropdown.value) {
@@ -78,7 +66,21 @@ color:white;
 
   
     getATheater().then((theater) => {
-      moviesDropdown.value = theater.film;
+      getAllFilms().then((result) => {
+    if (result.films) {
+      result.films.map(film => {
+        const newOption = document.createElement('option');
+        newOption.value = film._id;
+        newOption.innerHTML = film.name;
+
+        moviesDropdown.appendChild(newOption);
+      })
+    }
+
+    moviesDropdown.value = theater.film;
+  }).catch(() => {
+
+  })
     }).catch(() => {
       window.location = 'TheaterLogin.html';
     });
