@@ -108,8 +108,8 @@ color:white;
          
     <p><h2 id="release-date" ></h2></p>
         <button  ><p><h3 id="language-wrapper" >Tamil</h3></p></button>
-        <p><h2>2h 37m  .Action,Thriller  .UA</h2></p>
-        <p><h3>Leo is an action -thriller starring vijay and Trisha Krishnan in the lead</h3></p>
+        <p><h2 id="movie-length" ></h2></p>
+        <p><h3 id="movie-description" ></h3></p>
         </div>
         <div class="movies-box"> 
 <p><h2>Cast</h2></p>
@@ -178,6 +178,12 @@ color:white;
 
                         const languageWrapper = document.getElementById("language-wrapper");
                         languageWrapper.innerHTML = result.film.language;
+
+                        const movieLength = document.getElementById("movie-length");
+                        movieLength.innerHTML = result.film.movieLength || '2h 30m';
+
+                        const movieDescription = document.getElementById("movie-description");
+                        movieDescription.innerHTML = result.film.movieDescription || 'NA';
                     })
 
                     const bookingWrapper = document.getElementById("booking-wrapper");

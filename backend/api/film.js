@@ -32,7 +32,9 @@ module.exports = function (app) {
                 image: filmDetails.image,
                 trailerLink: filmDetails.trailerLink,
                 language: filmDetails.language,
-                releaseDate: filmDetails.releaseDate
+                releaseDate: filmDetails.releaseDate,
+                movieLength: filmDetails.movieLength,
+                movieDescription: filmDetails.movieDescription
             })
             .then(() => {
                 res.send({ message: "Film created succesfully", status: 1 });

@@ -19,6 +19,14 @@ module.exports = new mongoose.Schema({
     },
     releaseDate: {
         type: String,
-        requiredL: true
+        required: true
+    },
+    movieLength: {
+      type: String,
+      required: true
+    },
+    movieDescription: {
+      type: String,
+      required: true
     }
 });
