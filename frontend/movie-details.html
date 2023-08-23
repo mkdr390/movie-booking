@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>movie ticket online</title>
+  <link rel="stylesheet" href="css/common.css" />
+  <style>
+    .movies-box{
+        flex-direction: row;
+        width:105%;
+        border: 1px solid rgba(0,0,0,0.2);
+    }
+     
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .header .logo  {
+      font-size: 25px;
+      font-family: 'Sriracha', cursive;
+      color: #000;
+      text-decoration: none;
+      margin-left: 30px;
+    }
+.column {
+    float: left;
+    width: 20%;
+    padding: 10px;
+  }
+  
+  /* Clearfix (clear floats) */
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  .button {
+  border: none;
+  color:red;
+  padding: 30px 42px;
+  text-align: center;
+  text-decoration: center;
+  display: inline-block;
+  font-size: 40px;
+  margin: 5px 5px;
+  cursor: pointer;
+  flex-direction: column;
+  width: 100%;
+}
+
+.button1 {background-color:red;}
+.right{
+       text-align: right;
+    }
+
+.left{
+ text-align:left;
+color:white;
+ font-size:25px;
+ font-family: 'Sriracha', cursive;
+}
+@import url('https://fonts.googleapis.com/css2?family=Sriracha&display=swap');
+
+    body{
+        margin:0;
+        box-sizing:border-box;
+    }
+    
+     .logo {
+      font-size: 25px;
+      font-family: 'Sriracha', cursive;
+      color: #000;
+      text-decoration: none;
+      margin-left: 30px;
+    }
+
+    .movie-book-btn {
+        padding: 25px;
+        background-color: gray;
+        color: white;
+        cursor: pointer;
+    }
+   
+</style>
+  
+  </head>
+   
+   
+  <body>
+    <header class="header">
+        <a href="/" class="logo">Sky Movies</a>
+        <nav class="nav-items">
+          <a href="/">Home</a>
+          <a href="About us.html">About</a>
+          <a href="TheaterLogin.html">Theater Login</a>
+          <div id="login-holder" ></div>
+        </nav>
+    </header>
+            <h1 id="movie-title" style="text-align: center;" ></h1>
+          <div id="trailer-frame" >
+
+          </div>
+         
+    <p><h2 id="release-date" ></h2></p>
+        <button  ><p><h3 id="language-wrapper" >Tamil</h3></p></button>
+        <p><h2>2h 37m  .Action,Thriller  .UA</h2></p>
+        <p><h3>Leo is an action -thriller starring vijay and Trisha Krishnan in the lead</h3></p>
+        </div>
+        <div class="movies-box"> 
+<p><h2>Cast</h2></p>
+    <div class="row">
+    <div class="column">        
+<img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/vijay-2461-20-12-2017-04-37-08.jpg" style="width:150px" >
+<p><h4>Vijay|Actor</h4></p> 
+</div>  
+<div class="column">  
+<img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/trisha-krishnan-15856-18-09-2017-06-05-18.jpg"   style="width:150px">
+<p><h4>Trisha Krishnan|Actor</h4></p>
+</div>
+<div class="column">     
+    <img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/priya-anand-13077-18-08-2021-11-03-47.jpg"  style="width:150px">
+    <p><h4>Priya Anand|Actor</h4></p>
+    </div>
+    <div class="column">  
+    <img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/gautham-menon-2889-08-02-2022-03-33-26.jpg" style="width:150px">
+    <p><h4>Goutham Menon|Actor</h4></p>
+    </div>
+    
+    </div>
+    </div>
+
+<div class="movies-box"> 
+    <p><h2>Crew</h2></p>
+        <div class="row">
+        <div class="column"> 
+            <img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/lokesh-kanakaraj-1065304-24-03-2017-16-24-31.jpg" style="width:150px">
+            <p><h4>Lokesh Kanagaraj| Director, Writer</h4></p>
+            </div>
+            <div class="column"> 
+                <img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/anirudh-ravichander-34897-24-03-2017-13-54-49.jpg" style="width:150px">
+                <p><h4>Anirudh| Musician</h2></p>
+                </div>
+                </div>
+                </div>
+            
+        <div id="booking-wrapper" style="padding: 50px; text-align: center;" ></div>
+            <script src="js/axios.js" ></script>
+            <script src="js/app.js" ></script>
+            <script>
+                function getId(url) {
+                    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                    const match = url.match(regExp);
+
+                    return (match && match[2].length === 11)
+                    ? match[2]
+                    : null;
+                }
+
+                const filmId = getQueryParams('film');
+
+                if (filmId) {
+                    apiMachine.get('/film/one?film=' + filmId, {}).then((result) => {
+                        const movieTitle = document.getElementById("movie-title");
+                        movieTitle.innerHTML = result.film.name;
+
+                        const trailerFrame = document.getElementById("trailer-frame");
+                        const videoId = getId(result.film.trailerLink);
+                        const newFrame = '<iframe  width="1400px" height="550px" title="Leo" src="//www.youtube.com/embed/' + videoId + '" frameborder="40" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+                        trailerFrame.innerHTML = newFrame;
+
+                        const releaseDate = document.getElementById("release-date");
+                        releaseDate.innerHTML = "Releasing on " + result.film.releaseDate;
+
+                        const languageWrapper = document.getElementById("language-wrapper");
+                        languageWrapper.innerHTML = result.film.language;
+                    })
+
+                    const bookingWrapper = document.getElementById("booking-wrapper");
+                    const bookButton = document.createElement('button');
+                    bookButton.classList.add('movie-book-btn');
+                    bookButton.onclick = function book() {
+                        window.location = 'BookMovie.html?film=' + filmId;
+                    }
+                    bookButton.innerHTML = "Book now";
+                    bookingWrapper.appendChild(bookButton);
+                } else {
+                    window.location = 'movies.html'
+                }
+            </script>
+</body>
+ 
+  </html>

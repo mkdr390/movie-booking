@@ -160,9 +160,9 @@
                     const bookButton = document.createElement('button');
                     bookButton.classList.add('movie-book-btn');
                     bookButton.onclick = function book() {
-                        window.location = 'BookMovie.html?film=' + movie._id;
+                        window.location = 'movie-details.html?film=' + movie._id;
                     }
-                    bookButton.innerHTML = "Book now";
+                    bookButton.innerHTML = "Details";
 
                     movieBox.appendChild(movieImageWrapper);
                     movieBox.appendChild(movieName);
