@@ -28,5 +28,17 @@ module.exports = new mongoose.Schema({
     movieDescription: {
       type: String,
       required: true
-    }
+    },
+    cast: [
+      {
+        name: { type: String, required: true },
+        image: { type: String, required: true }
+      }
+    ],
+    crew: [
+      {
+        name: { type: String, required: true },
+        image: { type: String, required: true }
+      }
+    ]
 });

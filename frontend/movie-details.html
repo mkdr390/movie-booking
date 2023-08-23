@@ -113,38 +113,14 @@ color:white;
         </div>
         <div class="movies-box"> 
 <p><h2>Cast</h2></p>
-    <div class="row">
-    <div class="column">        
-<img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/vijay-2461-20-12-2017-04-37-08.jpg" style="width:150px" >
-<p><h4>Vijay|Actor</h4></p> 
-</div>  
-<div class="column">  
-<img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/trisha-krishnan-15856-18-09-2017-06-05-18.jpg"   style="width:150px">
-<p><h4>Trisha Krishnan|Actor</h4></p>
-</div>
-<div class="column">     
-    <img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/priya-anand-13077-18-08-2021-11-03-47.jpg"  style="width:150px">
-    <p><h4>Priya Anand|Actor</h4></p>
-    </div>
-    <div class="column">  
-    <img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/gautham-menon-2889-08-02-2022-03-33-26.jpg" style="width:150px">
-    <p><h4>Goutham Menon|Actor</h4></p>
-    </div>
+    <div id="cast-shower" class="row">
     
     </div>
     </div>
 
 <div class="movies-box"> 
     <p><h2>Crew</h2></p>
-        <div class="row">
-        <div class="column"> 
-            <img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/lokesh-kanakaraj-1065304-24-03-2017-16-24-31.jpg" style="width:150px">
-            <p><h4>Lokesh Kanagaraj| Director, Writer</h4></p>
-            </div>
-            <div class="column"> 
-                <img src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/anirudh-ravichander-34897-24-03-2017-13-54-49.jpg" style="width:150px">
-                <p><h4>Anirudh| Musician</h2></p>
-                </div>
+        <div id="crew-shower" class="row">
                 </div>
                 </div>
             
@@ -184,6 +160,26 @@ color:white;
 
                         const movieDescription = document.getElementById("movie-description");
                         movieDescription.innerHTML = result.film.movieDescription || 'NA';
+
+
+                        const castShower = document.getElementById("cast-shower");
+                        result.film.cast && result.film.cast.map(c => {
+                            const castItem = document.createElement("div");
+                            castItem.classList.add("column");
+                            castItem.innerHTML = '<img src="' + c.image + '" style="width:150px" ><p><h4>' + c.name + 'r</h4></p> ';
+
+                            castShower.appendChild(castItem);
+                        });
+
+                        const crewShower = document.getElementById("crew-shower");
+                        result.film.crew && result.film.crew.map(c => {
+                            const crewItem = document.createElement("div");
+                            crewItem.classList.add("column");
+                            crewItem.innerHTML = '<img src="' + c.image + '" style="width:150px" ><p><h4>' + c.name + 'r</h4></p> ';
+
+                            crewShower.appendChild(crewItem);
+                        });
+
                     })
 
                     const bookingWrapper = document.getElementById("booking-wrapper");
