@@ -202,38 +202,40 @@ background-color: #3e8e41;
       })
     }
   }
-</script>
-<script>
+
   function onbook() {
-    
-      const bookmovieForm = document.getElementById("book-form");
-      const isValid = bookmovieForm.checkValidity();
+    const filmId = getQueryParams('film');
+    const bookmovieForm = document.getElementById("book-form");
+    const isValid = bookmovieForm.checkValidity();
 
-      if (isValid) {
+    if (isValid) {
 
-        const formData = new FormData(bookmovieForm);
+      const formData = new FormData(bookmovieForm);
 
-        const formDataObj = {};
+      const formDataObj = {};
 
-        formData.forEach((value, key) => {
-          formDataObj[key] = value;
-        })
+      formData.forEach((value, key) => {
+        formDataObj[key] = value;
+      })
 
-        bookAMovieNow(formDataObj).then((res) => {
-          const ticketId = res.ticket && res.ticket._id;
-          window.location = '/payment.html?ticketId=' + ticketId
-        }).catch(() => {
-          alert("Error booking the movie");
-        });
-      } else {
-        bookmovieForm.reportValidity()
-        console.log("no")
+      if (filmId) {
+        formDataObj.film = filmId;
       }
 
-
-      return false;
+      bookAMovieNow(formDataObj).then((res) => {
+        const ticketId = res.ticket && res.ticket._id;
+        window.location = '/payment.html?ticketId=' + ticketId
+      }).catch(() => {
+        alert("Error booking the movie");
+      });
+    } else {
+      bookmovieForm.reportValidity()
+      console.log("no")
     }
-    
-  </script>
+
+
+    return false;
+  }
+</script>
 </body>
 </html>
