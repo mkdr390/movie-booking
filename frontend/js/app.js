@@ -67,7 +67,7 @@ function verifyLoginToken() {
     const userToken = localStorage.getItem('user-token');
 
     if (userToken) {
-        apiMachine
+        return apiMachine
         .get('/user/verify', {
             token: userToken
         })
@@ -79,18 +79,18 @@ function verifyLoginToken() {
             if (viewerName) {
                 viewerName.innerHTML = res.fullName;
             }
+
+            return Promise.resolve();
         }).catch(() => {
             renderLoginHolder();
+            return Promise.reject();
         })
     } else {
         renderLoginHolder();
 
-        return Promise.resolve();
+        return Promise.reject();
     }
 }
-
-
-verifyLoginToken();
 
 function createAFilm(filmDetails) {
     return apiMachine.post('/film/create', {
@@ -116,6 +116,10 @@ function getTheaterDetails() {
     return apiMachine.get('/theater/details', {
         token: getTheaterToken()
     })
+}
+
+function getTheaterFilmDetails(theaterId) {
+    return apiMachine.get('/theater/film?id=' + theaterId, {});
 }
 
 function addAMovieToTheater(movieId) {

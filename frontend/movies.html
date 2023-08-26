@@ -138,6 +138,8 @@
         <script src="js/axios.js" ></script>
         <script src="js/app.js" ></script>
         <script>
+            verifyLoginToken();
+            
             getAllFilms().then((result) => {
                 const movieListWrapper = document.getElementById('movies-list');
                 const moviesList = result.films || [];

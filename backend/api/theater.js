@@ -178,7 +178,6 @@ module.exports = function (app) {
 
         if (theaterId) {
             theaterModel.findById(theaterId).exec().then((result) => {
-                console.log(result)
                 if (result) {
                     res.send({ theater: result });
                 } else {

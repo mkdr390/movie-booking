@@ -118,13 +118,13 @@ background-color: #3e8e41;
 </select>
 
 <label for="theaters-dropdown">Theater</label>
-<select id="theaters-dropdown" name="theater" >
+<select id="theaters-dropdown" name="theater" onchange="onTheaterChange()" >
   <option value="" >Select a theater</option>
 
 </select>
 
 <label for="date">Date</label>
-<input type="date" id="date" name="date" required><br>
+<input type="date" id="booking-date" name="date" onchange="onDateChange()" required><br>
 
 <label for="time">Time</label>
 <select id="time" name="time" required>
@@ -137,11 +137,15 @@ background-color: #3e8e41;
 <label for="seats">How many seats?</label>
 <input type="number" id="seats" name="seats" value="1" >
 
+<div style="display: flex; align-items: center; gap: 10px; background-color: #f2f2f2; border-radius: 10px; padding: 15px;" >
+  <div >Available Tickets:</div>
+  <div id="available-tickets" style="text-align: left;" >-</div>
+</div>
 
-<label for=""></label>
+<center> 
 
-
-<center> <button header class="header1" onclick="return onbook()" class="logo1" >
+  
+  <button header class="header1" onclick="return onbook()" class="logo1" >
   
   Book Tickets
 </button> 
@@ -151,6 +155,10 @@ background-color: #3e8e41;
 <script src="js/axios.js" ></script>
 <script src="js/app.js" ></script>
 <script>
+  verifyLoginToken().catch(() => {
+    window.location = 'ViewerLogin.html'
+  });
+
   const filmId = getQueryParams('film');
   const moviesDropdown = document.getElementById("movies-dropdown");
 
@@ -200,6 +208,43 @@ background-color: #3e8e41;
       }).catch(() => {
 
       })
+    }
+  }
+
+  function showAvailableTickets(theaterId, theDate) {
+    if (theaterId && theDate) {
+      getTheaterFilmDetails(theaterId).then((result) => {
+        const dateExist = result?.theater?.seats?.find(s => s.date === theDate);
+        let availableTickets = 0;
+
+        if (dateExist) {
+          availableTickets = dateExist["6PM"]
+        } else {
+          availableTickets = 100;
+        }
+
+        document.getElementById('available-tickets').innerHTML = availableTickets
+      })
+    }
+  }
+
+  function onTheaterChange() {
+    const theatersDropdown = document.getElementById("theaters-dropdown");
+    const dateField = document.getElementById("booking-date");
+    if (theatersDropdown.value && dateField.value) {
+      showAvailableTickets(theatersDropdown.value, dateField.value);
+    } else {
+      document.getElementById('available-tickets').innerHTML = "-";
+    }
+  }
+
+  function onDateChange() {
+    const theatersDropdown = document.getElementById("theaters-dropdown");
+    const dateField = document.getElementById("booking-date");
+    if (theatersDropdown.value && dateField.value) {
+      showAvailableTickets(theatersDropdown.value, dateField.value);
+    } else {
+      document.getElementById('available-tickets').innerHTML = "-";
     }
   }
 
