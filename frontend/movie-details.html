@@ -168,7 +168,7 @@ color:white;
                         result.film.cast && result.film.cast.map(c => {
                             const castItem = document.createElement("div");
                             castItem.classList.add("column");
-                            castItem.innerHTML = '<img src="' + c.image + '" style="width:150px" ><p><h4>' + c.name + 'r</h4></p> ';
+                            castItem.innerHTML = '<img src="' + c.image + '" style="width:150px" ><p><h4>' + c.name + '</h4></p> ';
 
                             castShower.appendChild(castItem);
                         });
@@ -177,7 +177,7 @@ color:white;
                         result.film.crew && result.film.crew.map(c => {
                             const crewItem = document.createElement("div");
                             crewItem.classList.add("column");
-                            crewItem.innerHTML = '<img src="' + c.image + '" style="width:150px" ><p><h4>' + c.name + 'r</h4></p> ';
+                            crewItem.innerHTML = '<img src="' + c.image + '" style="width:150px" ><p><h4>' + c.name + '</h4></p> ';
 
                             crewShower.appendChild(crewItem);
                         });
